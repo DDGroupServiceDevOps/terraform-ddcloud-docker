@@ -39,11 +39,11 @@ RUN git clone https://github.com/DimensionDataResearch/dd-cloud-compute-terrafor
 FROM alpine
 RUN apk add --update git bash openssh curl
 COPY --from=build /go/bin/terraform /bin 
-COPY --from=build /go/src/github.com/DimensionDataResearch/dd-cloud-compute-terraform/_bin/terraform-provider-ddcloud /bin
+COPY --from=build /usr/local/bin/terraform-provider-ddcloud /bin
 
 
 ## Kubectl binadry download (The K8s/Helm Terraform providers are not yet able to perform all the configuration required during a deployment)
-RUN wget https://storage.googleapis.com/kubernetes-release/release/v1.14.1/bin/linux/amd64/kubectl && \
+RUN wget https://storage.googleapis.com/kubernetes-release/release/v1.15.3/bin/linux/amd64/kubectl && \
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin/kubectl
 
