@@ -3,9 +3,9 @@
 
 # FROM golang:alpine as Build
 FROM golang:1.12.1-alpine as Build
- 
-ENV TERRAFORM_VERSION=0.11.14
-ENV DDCLOUD_VERSION=2.0
+
+ENV TERRAFORM_VERSION=0.12.19
+ENV DDCLOUD_VERSION=3.0
 
 RUN apk add --update git bash openssh make
 
@@ -43,7 +43,7 @@ COPY --from=build /usr/local/bin/terraform-provider-ddcloud /bin
 
 
 ## Kubectl binadry download (The K8s/Helm Terraform providers are not yet able to perform all the configuration required during a deployment)
-RUN wget https://storage.googleapis.com/kubernetes-release/release/v1.15.3/bin/linux/amd64/kubectl && \
+RUN wget https://storage.googleapis.com/kubernetes-release/release/v1.15.10/bin/linux/amd64/kubectl && \
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin/kubectl
 
