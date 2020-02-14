@@ -4,7 +4,7 @@
 # FROM golang:alpine as Build
 FROM golang:1.12.1-alpine as Build
 
-ENV TERRAFORM_VERSION=0.12.19
+ENV TERRAFORM_VERSION=0.12.20
 ENV DDCLOUD_VERSION=3.0
 
 RUN apk add --update git bash openssh make
@@ -25,7 +25,7 @@ RUN git clone https://github.com/hashicorp/terraform.git ./ && \
 WORKDIR $GOPATH/src/github.com/DimensionDataResearch/dd-cloud-compute-terraform
 RUN git clone https://github.com/DimensionDataResearch/dd-cloud-compute-terraform.git ./ && \
     # git checkout v${DDCLOUD_VERSION} && \
-    git checkout development/v${DDCLOUD_VERSION} && \
+    git checkout terraform_v12_upgrade && \
     go get github.com/pkg/errors && \
     go get golang.org/x/crypto/pkcs12 && \
     go get github.com/DimensionDataResearch/go-dd-cloud-compute/compute && \
@@ -39,7 +39,7 @@ RUN git clone https://github.com/DimensionDataResearch/dd-cloud-compute-terrafor
 FROM alpine
 RUN apk add --update git bash openssh curl
 COPY --from=build /go/bin/terraform /bin 
-COPY --from=build /usr/local/bin/terraform-provider-ddcloud /bin
+COPY --from=build /go/src/github.com/DimensionDataResearch/dd-cloud-compute-terraform/_bin/terraform-provider-ddcloud /bin
 
 
 ## Kubectl binadry download (The K8s/Helm Terraform providers are not yet able to perform all the configuration required during a deployment)
