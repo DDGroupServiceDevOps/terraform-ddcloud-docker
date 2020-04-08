@@ -4,7 +4,7 @@
 # FROM golang:alpine as Build
 FROM golang:1.12.1-alpine as Build
 
-ENV TERRAFORM_VERSION=0.12.20
+ENV TERRAFORM_VERSION=0.12.24
 ENV DDCLOUD_VERSION=3.0
 
 RUN apk add --update git bash openssh make
@@ -40,7 +40,6 @@ FROM alpine
 RUN apk add --update git bash openssh curl
 COPY --from=build /go/bin/terraform /bin 
 COPY --from=build /go/src/github.com/DimensionDataResearch/dd-cloud-compute-terraform/_bin/terraform-provider-ddcloud /bin
-
 
 ## Kubectl binadry download (The K8s/Helm Terraform providers are not yet able to perform all the configuration required during a deployment)
 RUN wget https://storage.googleapis.com/kubernetes-release/release/v1.15.10/bin/linux/amd64/kubectl && \
