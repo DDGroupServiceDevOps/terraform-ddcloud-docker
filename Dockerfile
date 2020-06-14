@@ -32,9 +32,9 @@ RUN git clone https://github.com/DimensionDataResearch/dd-cloud-compute-terrafor
     make dev
 
 ## Ansible Provider
-WORKDIR $GOPATH/src/github.com/nbering/terraform-provider-ansible
-RUN git clone https://github.com/nbering/terraform-provider-ansible.git ./ && \
-    make 
+# WORKDIR $GOPATH/src/github.com/nbering/terraform-provider-ansible
+# RUN git clone https://github.com/nbering/terraform-provider-ansible.git ./ && \
+#     make 
 #RUN ls -l $GOPATH/bin/
     # git checkout
     #git checkout master && \
@@ -51,8 +51,13 @@ FROM alpine
 RUN apk add --update git bash openssh curl
 COPY --from=build /go/bin/terraform /bin 
 COPY --from=build /go/src/github.com/DimensionDataResearch/dd-cloud-compute-terraform/_bin/terraform-provider-ddcloud /bin
-COPY --from=build /go/bin/terraform-provider-ansible /bin
-COPY --from=build /go/bin/terraform-provider-ansible /root/.terraform.d/plugins/linux_amd64/
+#COPY --from=build /go/bin/terraform-provider-ansible /bin
+#COPY ./freebsd_amd64/terraform-provider-ansible_v1.0.3 /bin/terraform-provider-ansible
+#COPY --from=build /go/bin/terraform-provider-ansible /root/.terraform.d/plugins/linux_amd64/
+RUN wget https://github.com/nbering/terraform-provider-ansible/releases/download/v1.0.3/terraform-provider-ansible-linux_amd64.zip && \
+    unzip terraform-provider-ansible-linux_amd64.zip && \
+    cp linux_amd64/terraform-provider-ansible_v1.0.3 /bin/terraform-provider-ansible
+
 
 ## Kubectl binadry download (The K8s/Helm Terraform providers are not yet able to perform all the configuration required during a deployment)
 RUN wget https://storage.googleapis.com/kubernetes-release/release/v1.15.10/bin/linux/amd64/kubectl && \
