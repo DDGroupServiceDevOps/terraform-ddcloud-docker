@@ -52,7 +52,7 @@ RUN apk add --update git bash openssh curl
 COPY --from=build /go/bin/terraform /bin 
 COPY --from=build /go/src/github.com/DimensionDataResearch/dd-cloud-compute-terraform/_bin/terraform-provider-ddcloud /bin
 COPY --from=build /go/bin/terraform-provider-ansible /bin
-COPY --from=build /go/bin/terraform-provider-ansible ~/.terraform.d/plugins/linux_amd64
+COPY --from=build /go/bin/terraform-provider-ansible /root/.terraform.d/plugins/linux_amd64/
 
 ## Kubectl binadry download (The K8s/Helm Terraform providers are not yet able to perform all the configuration required during a deployment)
 RUN wget https://storage.googleapis.com/kubernetes-release/release/v1.15.10/bin/linux/amd64/kubectl && \
