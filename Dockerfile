@@ -64,6 +64,8 @@ RUN wget https://storage.googleapis.com/kubernetes-release/release/v1.15.10/bin/
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin/kubectl
 
+RUN wget https://github.com/lord-kyron/terraform-provider-phpipam/releases/download/v1.1.0/terraform-provider-phpipam && \
+    cp terraform-provider-phpipam /bin/terraform-provider-phpipam
 WORKDIR /bin
 
 ENTRYPOINT ["terraform"]
